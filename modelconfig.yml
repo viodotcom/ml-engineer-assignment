@@ -1,0 +1,13 @@
+name: YourNewModel
+version: 0.0.1
+features:
+  - source: "data/train_A.csv"
+    columns: ["hotel_id", "date", "check_in", "check_out", "day_distance", "length_of_stay", "status"]
+  - source: "data/train_B.csv"
+    columns: ["hotel__id", "country_code"]
+
+model:
+  name: YourNewModel
+  path: some-model-store
+  training_script: train.py
+  inference_script: inference.py
