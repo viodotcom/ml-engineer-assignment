@@ -2,9 +2,53 @@ name: YourNewModel
 version: 0.0.1
 features:
   - source: "data/train_A.csv"
-    columns: ["hotel_id", "date", "check_in", "check_out", "day_distance", "length_of_stay", "status"]
+    columns: 
+      - name: "hotel_id"
+        type: "string"
+        xteristics:
+          unique: true
+      - name: "date"
+        type: "datetime"
+        xteristics:
+          from: "2018-01-01"
+          to: "2022-05-31"
+      - name: "check_in"
+        type: "datetime"
+        xteristics:
+          from: "2018-01-01"
+          to: "2022-06-31"
+      - name: "check_out"
+        type: "datetime"
+        xteristics:
+          from: "2018-01-01"
+          to: "2022-07-31"
+      - name: "day_distance"
+        type: "integer"
+        xteristics:
+          min: 0
+          max: 100
+          mean: 50
+          std: 10
+      - name: "length_of_stay"
+        type: "integer"
+        xteristics:
+          calculated: true
+          columns: ["check_in", "check_out"]
+      - name: "status"
+        type: "string"
+        xteristics:
+          values: ["booked", "cancelled", "fulfilled"]
+
   - source: "data/train_B.csv"
-    columns: ["hotel__id", "country_code"]
+    columns: 
+    - name: "hotel_id"
+      type: "string"
+      xteristics:
+          unique: true
+    - name: "country_code"
+      type: "string"
+      xteristics:
+          lenght: 2
 
 model:
   name: YourNewModel

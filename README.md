@@ -56,7 +56,7 @@ Follow this steps to get your environment ready for the assignment
 3) Go to the root folder of the project and execute the following command to create the Docker images and run the containers:
 
 ```bash
-$ cd data-engineer-assignment
+$ cd ml-engineer-assignment
 $ docker-compose up
 ```
 
@@ -66,7 +66,7 @@ $ docker-compose up
 $ docker ps -a
 
 CONTAINER ID   IMAGE                             COMMAND                  CREATED          STATUS        PORTS  NAMES
-e30532b91de5   data-engineer-assignment_client   "/bin/sh -c make"        29 minutes ago   Up 8 seconds         client
+e30532b91de5   ml-engineer-assignment_client   "/bin/sh -c make"        29 minutes ago   Up 8 seconds         client
 fc6259295a34   localstack/localstack             "docker-entrypoint.sh"   25 hours ago     Up 9 seconds   ...   localstack
 
 $ docker stop client
@@ -75,10 +75,10 @@ $ docker rm client
 $ docker image list
 
 REPOSITORY                        TAG         IMAGE ID       CREATED          SIZE
-data-engineer-assignment_client   latest      513762759561   32 minutes ago   619MB
+ml-engineer-assignment_client   latest      513762759561   32 minutes ago   619MB
 localstack/localstack             latest      24d3ad4fc839   4 days ago       1.52GB
 
-$ docker image rm data-engineer-assignment_client
+$ docker image rm ml-engineer-assignment_client
 ```
 
 5) You can open a SSH session in the `client` container with:
