@@ -16,18 +16,23 @@ RUN rm terraform_1.1.9_linux_amd64.zip
 
 # Create directories for the assignment
 RUN mkdir -p /root/.aws
-RUN mkdir -p /assignment/lambda
 RUN mkdir -p /assignment/deployment
+RUN mkdir -p /assignment/codes
+RUN mkdir -p /assignment/data
 
 # Copy files
 COPY aws/credentials /root/.aws
 COPY Makefile /assignment
-COPY zip-lambdas.sh /assignment
-COPY lambda/ /assignment/lambda
+COPY model_config.yml /assignment
+COPY requirements.txt /assignment
 COPY deployment/ /assignment/deployment
+COPY codes/ /assignment/codes
+COPY data/ /assignment/data
+
+RUN pip3 install -r /assignment/requirements.txt
 
 # Move to the assignment directory
 WORKDIR /assignment
 
 # Entry point
-CMD make
+CMD ["/bin/sh"]

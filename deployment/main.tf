@@ -46,18 +46,3 @@ provider "aws" {
 resource "aws_s3_bucket" "test" {
   bucket = "test"
 }
-
-resource "aws_lambda_function" "test" {
-  function_name    = "test"
-  role             = "arn:aws:iam::000000000000:role/test"
-  filename         = "${path.module}/test.zip"
-  source_code_hash = filebase64sha256("${path.module}/test.zip")
-  handler          = "test.handler"
-  runtime          = "python3.7"
-
-  environment {
-    variables = {
-      BUCKET = aws_s3_bucket.test.id
-    }
-  }
-}

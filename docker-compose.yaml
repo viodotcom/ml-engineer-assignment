@@ -14,8 +14,42 @@ services:
     volumes:
       - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
-  client:
-    container_name: client
-    build: .
+
+  ofelia:
+    image: mcuadros/ofelia:latest
     depends_on:
-      - localstack
+      - train
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      ofelia.job-local.my-test-job.schedule: "@every 5s"
+      ofelia.job-local.my-test-job.command: "date"
+    
+  init_resources:
+    build: .
+    image: assignment/resources:0.0.1
+    command: make
+    depends_on:
+        - localstack
+  
+  train:
+    image: assignment/resources:0.0.1
+    container_name: train
+    command: make train
+    depends_on:
+      - init_resources
+    labels:
+      - ofelia.enabled=true
+      - ofelia.job-exec.train-job.schedule="@every 5s"
+      - ofelia.job-exec.train-job.command="make train"
+    environment:
+      - USERNAME=test
+  
+  inference:
+    <<: *default
+    container_name: inference
+    labels:
+      - ofelia.enabled=true
+      - ofelia.job-exec.inference-job.schedule="@every 10m"
+      - ofelia.job-exec.inference-job.command="make inference"
