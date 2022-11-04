@@ -11,6 +11,7 @@ services:
     environment:
       - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
       - DOCKER_HOST=unix:///var/run/docker.sock
+      - LOCALSTACK_HOSTNAME=localstack
     volumes:
       - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -34,8 +35,8 @@ services:
       ofelia.job-run.train.schedule: "@every 5s" #TODO 3: Update as you see fit
       ofelia.job-run.train.command: "make train"
       ofelia.job-run.train.image: "ml_engineering_resources"
-      ofelia.job-run.train.environment: USERNAME=test
+      ofelia.job-run.train.environment: '["USERNAME=test"]'
       ofelia.job-run.inference.schedule: "@every 5s" #TODO 4: Update as you see fit
       ofelia.job-run.inference.command: "make inference"
       ofelia.job-run.inference.image: "ml_engineering_resources"
-      ofelia.job-run.inference.environment: USERNAME=test
+      ofelia.job-run.inference.environment: '["USERNAME=test"]'

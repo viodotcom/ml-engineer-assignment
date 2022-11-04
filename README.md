@@ -58,8 +58,12 @@ $ docker-compose up
 4) You will be working mostly with the image build with the `init_resource` task in the docker-compose. Whenever you change anything, it is recommended to remove the existing container and image to ensure the latest version is used. You can do this with:
 
 ```bash
-$ stop docker-compose with cmd/ctrl c
-$ docker-compose down 
+$ docker-compose up --remove-orphans --build init_resources ofelia
+```
+
+5) You can remove exited containers related to the pipeline with the following command
+```
+$ docker rm $(docker ps --filter status=exited --filter ancestor=ml_engineering_resources -q)
 ```
 
 
