@@ -21,3 +21,6 @@ check-resources:
 
 
 run: wait-for-localstack run-terraform check-resources
+
+# TODO 1: Add rule for train
+# TODO 2: Add rule for inference

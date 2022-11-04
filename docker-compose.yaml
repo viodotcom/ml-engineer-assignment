@@ -14,42 +14,28 @@ services:
     volumes:
       - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    
+  init_resources:
+    build: .
+    container_name: ml_engineering_resources
+    image: ml_engineering_resources
+    command: make
+    depends_on:
+        - localstack
 
   ofelia:
     image: mcuadros/ofelia:latest
     depends_on:
-      - train
+      - init_resources
     command: daemon --docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
-      ofelia.job-local.my-test-job.schedule: "@every 5s"
-      ofelia.job-local.my-test-job.command: "date"
-    
-  init_resources:
-    build: .
-    image: assignment/resources:0.0.1
-    command: make
-    depends_on:
-        - localstack
-  
-  train:
-    image: assignment/resources:0.0.1
-    container_name: train
-    command: make train
-    depends_on:
-      - init_resources
-    labels:
-      - ofelia.enabled=true
-      - ofelia.job-exec.train-job.schedule="@every 5s"
-      - ofelia.job-exec.train-job.command="make train"
-    environment:
-      - USERNAME=test
-  
-  inference:
-    <<: *default
-    container_name: inference
-    labels:
-      - ofelia.enabled=true
-      - ofelia.job-exec.inference-job.schedule="@every 10m"
-      - ofelia.job-exec.inference-job.command="make inference"
+      ofelia.job-run.train.schedule: "@every 5s" #TODO 3: Update as you see fit
+      ofelia.job-run.train.command: "make train"
+      ofelia.job-run.train.image: "ml_engineering_resources"
+      ofelia.job-run.train.environment: USERNAME=test
+      ofelia.job-run.inference.schedule: "@every 5s" #TODO 4: Update as you see fit
+      ofelia.job-run.inference.command: "make inference"
+      ofelia.job-run.inference.image: "ml_engineering_resources"
+      ofelia.job-run.inference.environment: USERNAME=test
