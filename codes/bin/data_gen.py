@@ -19,7 +19,7 @@ unique_values = [
 ]
 
 ROOT_DIR = '.'
-with open(os.path.join(ROOT_DIR, 'modelconfig.yml'), "r") as stream:
+with open(os.path.join(ROOT_DIR, 'model_config.yml'), "r") as stream:
     try:
         config = dict(yaml.load(stream))
     except yaml.YAMLError as exc:
@@ -55,7 +55,7 @@ class STRINGTYPE(DataGen):
 
     def generate_length(self):
         letters = string.ascii_uppercase
-        length_data = [''.join(random.choice(letters) for _ in range(self.length)) for _ in range(1000)]
+        length_data = [''.join(random.choice(letters) for _ in range(self.length)) for _ in range(self.size+1)]
         return random.sample(length_data, k=self.size)
 
     def __generate_default(self):

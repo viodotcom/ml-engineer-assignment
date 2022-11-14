@@ -19,7 +19,8 @@ The content of this repository is organised as follows:
 - [deployment](deployment/) directory including a sample Terraform script that deploys a S3 bucket (optionally for model storage).
 - [lambda](lambda/) directory including a `test` Python script for a sample Lambda function.
 - [codes](codes/) directory includes sample training and inference code that could be used in the pipeline
-- [data](data/) directory includes some generated data that can be used to build a model, the data was automatically generated with the script in [bin](codes/bin/)
+- [data](data/) directory includes some generated data that can be used to build a model, the data was automatically generated with the script in [bin](codes/bin/). 
+>**_DATA-NOTE_**: The target variable in this case is `status`
 
 ## Environment
 
@@ -73,7 +74,7 @@ In this assignment you will be working with internal data from two data sources.
 
 The overal purpose is to prepare a scalable end to end machine learning pipeline that our data scientist can easily plugin in and update given some training files and some inference python file.
 
-We want you to be able to use any orchestration tool of choice (but we would favour Metaflow)
+We want you to be able to use any orchestration tool of choice (internally we use Metaflow if you prefer)
 
 The assignment is divided in 2 parts, the first one focused on end to end training to batch inference. The second part is mainly focused on how you would monitor the model relative to business and model metrics such that we have a model that keep performing since the model is going to be mission critical.
 
@@ -99,7 +100,7 @@ flowchart LR
 In this part of the assignment you will help business stakeholders and users of your model's inference to have high level of confidence in your model by providing some monitoring environment for evaluating your model and determining when there is an emergency. You can use any tool of choice here that can interact with your enviornment
 
 
-### Bonus - Evaluate how to go from data scientist's training and inference code update to deploying new version of the model.
+>**_NOTE:_** We are really not particular about the accuracy of your model, rather we are interested in how the pieces of your codes connects including given the training and inference scripts.
 
 ## Evaluation
 
@@ -110,7 +111,7 @@ Therefore, we will test your solution by running:
 $ docker-compose up
 ```
 
-> **_NOTE_**: We suggest using the Makefile to run all the necessary steps in the `ofelia` orchestration container, like we do in the sample. However, you are free to do it any way you want, as long as everything that needs to run does so automatically when the containers are launched.
+> **_NOTE_**: We suggest using the Makefile to run all the necessary steps and with the `ofelia` scheduliing container, like we do in the sample `docker-compose.yml`. However, you are free to do it any way you want, as long as everything that needs to run does so automatically when the containers are launched.
 
 We will also check all the code provided in the repository and evaluate it focusing on:
 - Code quality
